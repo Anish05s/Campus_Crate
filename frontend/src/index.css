@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@source "../index.html";
+@source "./**/*.{js,ts,jsx,tsx}";
+
+@theme {
+  --color-primary: #6C63FF;
+  --color-background: #0A0A0B;
+  --color-surface: #111113;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
