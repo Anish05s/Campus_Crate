@@ -4,15 +4,19 @@ from database import Base, engine
 from routers import auth, listings, chat, uploads, users
 import uvicorn
 
+import os
+
 # Create DB tables (In production, use Alembic)
 if engine:
     Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="CampusCrate API")
 
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], # Vite default ports
+    allow_origins=[frontend_url, "http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
