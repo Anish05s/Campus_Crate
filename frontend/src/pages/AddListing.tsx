@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createListing } from '../api/listings';
 import { uploadImage } from '../api/uploads';
-import { Loader2, ArrowLeft, Camera } from 'lucide-react';
+import { Loader2, ArrowLeft } from 'lucide-react';
 
 export default function AddListing() {
   const navigate = useNavigate();
