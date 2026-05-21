@@ -16,10 +16,6 @@ export default function ChatRoom() {
   const currentUserId = localStorage.getItem('user_id');
   const accessToken = localStorage.getItem('access_token');
 
-  // Extract listing title fragment from room for display
-  const parts = roomId?.split('_') ?? [];
-  const listingId = parts[0] ?? '';
-
   useEffect(() => {
     if (!accessToken) { navigate('/auth'); return; }
     if (!roomId) return;
