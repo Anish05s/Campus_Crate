@@ -41,7 +41,7 @@ export default function ChatRoom() {
 
   const connectWs = () => {
     const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-    const wsBaseUrl = baseUrl.replace(/^http/, 'ws');
+    const wsBaseUrl = baseUrl.replace(/^https?/, (match) => match === 'https' ? 'wss' : 'ws');
     const wsUrl = `${wsBaseUrl}/chat/ws/${roomId}?token=${accessToken}`;
     
     const ws = new WebSocket(wsUrl);
