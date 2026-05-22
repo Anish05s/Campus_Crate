@@ -84,8 +84,8 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-white p-6">
       <div className="max-w-2xl mx-auto">
-        <button onClick={() => navigate('/marketplace')} className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
-          <ArrowLeft size={18} /> Back to Marketplace
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+          <ArrowLeft size={18} /> Back
         </button>
 
         <h1 className="text-3xl font-bold mb-8">Your Profile</h1>
@@ -168,7 +168,18 @@ export default function Profile() {
             </div>
           </div>
           
-          <div className="pt-4 flex justify-end">
+          <div className="pt-4 flex justify-between items-center border-t border-white/10 mt-6">
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('user_id');
+                navigate('/auth');
+              }}
+              className="text-red-400 hover:text-red-300 hover:bg-red-400/10 px-4 py-2 rounded-xl transition-colors font-medium text-sm"
+            >
+              Log Out
+            </button>
             <button
               type="submit"
               disabled={saving}

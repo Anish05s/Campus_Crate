@@ -71,11 +71,11 @@ export default function AddListing() {
     <div className="min-h-screen bg-[#0A0A0B] p-6 text-white flex justify-center">
       <div className="w-full max-w-2xl">
         <button 
-          onClick={() => navigate('/marketplace')} 
+          onClick={() => navigate(-1)} 
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6"
         >
           <ArrowLeft size={18} />
-          Back to Marketplace
+          Back
         </button>
         
         <div className="bg-[#111113] border border-white/10 rounded-2xl p-8">

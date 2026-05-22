@@ -56,8 +56,8 @@ export default function ListingDetail() {
   return (
     <div className="min-h-screen bg-[#0A0A0B] text-white p-6">
       <div className="max-w-4xl mx-auto">
-        <button onClick={() => navigate('/marketplace')} className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
-          <ArrowLeft size={18} /> Back to Marketplace
+        <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-400 hover:text-white mb-6 transition-colors">
+          <ArrowLeft size={18} /> Back
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
