@@ -3,6 +3,14 @@ from uuid import UUID
 from datetime import datetime
 from typing import Optional
 
+class RegisterRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
 class OTPRequest(BaseModel):
     email: EmailStr
 

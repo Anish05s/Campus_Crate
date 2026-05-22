@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { requestOtp, verifyOtp } from '../api/auth';
-import { Mail, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
+import { register, login, verifyOtp } from '../api/auth';
+import { Mail, Lock, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function Auth() {
-  const [step, setStep] = useState<'email' | 'otp'>('email');
+  const [mode, setMode] = useState<'login' | 'register'>('login');
+  const [step, setStep] = useState<'form' | 'otp'>('form');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -13,7 +15,7 @@ export default function Auth() {
   const navigate = useNavigate();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     
@@ -21,13 +23,24 @@ export default function Auth() {
       setError('Please enter a valid college email address.');
       return;
     }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
     
     setIsLoading(true);
     try {
-      await requestOtp(email);
-      setStep('otp');
+      if (mode === 'register') {
+        await register(email, password);
+        setStep('otp'); // Only registration requires OTP
+      } else {
+        const data = await login(email, password);
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('user_id', data.user_id);
+        navigate('/'); // Login is direct
+      }
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Failed to send OTP. Please try again.');
+      setError(err.response?.data?.detail || 'Authentication failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -78,7 +91,6 @@ export default function Auth() {
       const data = await verifyOtp(email, otpCode);
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('user_id', data.user_id);
-      // Navigate to marketplace or setup profile
       navigate('/');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Invalid OTP. Please try again.');
@@ -106,8 +118,8 @@ export default function Auth() {
           </div>
         )}
 
-        {step === 'email' ? (
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
+        {step === 'form' ? (
+          <form onSubmit={handleFormSubmit} className="space-y-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-300">College Email</label>
               <div className="relative">
@@ -124,18 +136,50 @@ export default function Auth() {
                 />
               </div>
             </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-300">Password</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                  <Lock size={18} />
+                </div>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#6C63FF] focus:border-transparent transition-all"
+                  required
+                  minLength={6}
+                />
+              </div>
+            </div>
+
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-[#6C63FF] hover:bg-[#5b54d6] text-white font-medium py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-[#6C63FF] hover:bg-[#5b54d6] text-white font-medium py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
             >
-              {isLoading ? <Loader2 className="animate-spin" size={20} /> : 'Continue'}
+              {isLoading ? <Loader2 className="animate-spin" size={20} /> : (mode === 'login' ? 'Sign In' : 'Create Account')}
               {!isLoading && <ArrowRight size={18} />}
             </button>
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mt-6">
-              <ShieldCheck size={14} className="text-emerald-400" />
-              <span>We'll verify this email belongs to a student.</span>
+
+            <div className="text-center mt-4">
+              <button
+                type="button"
+                onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                {mode === 'login' ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+              </button>
             </div>
+
+            {mode === 'register' && (
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 mt-6 pt-4 border-t border-white/10">
+                <ShieldCheck size={14} className="text-emerald-400" />
+                <span>We'll verify this email belongs to a student.</span>
+              </div>
+            )}
           </form>
         ) : (
           <form onSubmit={handleOtpSubmit} className="space-y-6">
@@ -172,7 +216,7 @@ export default function Auth() {
             <div className="text-center">
               <button
                 type="button"
-                onClick={() => setStep('email')}
+                onClick={() => setStep('form')}
                 className="text-sm text-gray-400 hover:text-white transition-colors"
               >
                 Use a different email
