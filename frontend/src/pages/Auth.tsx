@@ -104,9 +104,7 @@ export default function Auth() {
     <div className="min-h-screen bg-[#0A0A0B] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-[#111113] border border-white/10 rounded-2xl p-8 shadow-2xl">
         <div className="flex flex-col items-center text-center mb-8">
-          <div className="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center mb-4">
-            <span className="text-2xl">📦</span>
-          </div>
+          <img src="/logo.png" alt="CampusCrate Logo" className="w-20 h-20 object-contain mb-4" />
           <h1 className="text-2xl font-bold text-white mb-2">Welcome to CampusCrate</h1>
           <p className="text-gray-400 text-sm">
             The student-only marketplace for your campus.

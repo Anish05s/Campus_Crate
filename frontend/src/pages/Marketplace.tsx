@@ -33,9 +33,12 @@ export default function Marketplace() {
     <div className="min-h-screen bg-[#0A0A0B] p-6 text-white">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold mb-2">Marketplace</h1>
-            <p className="text-gray-400">Buy, sell, rent, or donate on campus</p>
+          <div className="flex items-center gap-4">
+            <img src="/logo.png" alt="CampusCrate Logo" className="w-12 h-12 object-contain" />
+            <div>
+              <h1 className="text-3xl font-bold mb-0.5">Marketplace</h1>
+              <p className="text-gray-400 text-sm">Buy, sell, rent, or donate on campus</p>
+            </div>
           </div>
           <div className="flex gap-3">
             <Link to="/inbox" className="bg-white/5 border border-white/10 hover:bg-white/10 text-white px-4 py-2.5 rounded-xl font-medium transition-colors">
