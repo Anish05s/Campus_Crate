@@ -11,9 +11,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/auth" replace />} />
+        <Route path="/" element={<Marketplace />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/listing/:id" element={<ListingDetail />} />
         <Route path="/inbox" element={<Inbox />} />
