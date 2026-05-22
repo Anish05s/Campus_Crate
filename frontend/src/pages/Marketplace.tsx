@@ -34,7 +34,7 @@ export default function Marketplace() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div className="flex items-center gap-4">
-            <img src="/logo.png" alt="CampusCrate Logo" className="w-12 h-12 object-contain" />
+            <img src="/logo.png" alt="CampusCrate Logo" className="w-24 h-24 object-contain" />
             <div>
               <h1 className="text-3xl font-bold mb-0.5">Marketplace</h1>
               <p className="text-gray-400 text-sm">Buy, sell, rent, or donate on campus</p>
