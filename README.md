@@ -18,7 +18,7 @@ CampusCrate is a student-focused, full-stack marketplace that enables students w
 - **Framework**: React 18 & Vite
 - **Styling**: Tailwind CSS & Lucide React Icons
 - **Routing**: React Router DOM
-- **Deployment**: Netlify (`https://campuscratenew.netlify.app`)
+- **Deployment**: Vercel
 
 ### Backend (Server)
 - **Framework**: FastAPI (Python)
